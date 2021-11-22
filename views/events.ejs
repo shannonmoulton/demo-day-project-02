@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <title>Mom-to-Mom</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/profile">Home</a>
+          <a class="nav-link" href="/resources">Resources</a>
+          <a class="nav-link" href="/community">Community</a>
+          <a class="nav-link" href="/events">Events</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="page-header text-center">
+    <h1>Events</h1>
+    <a href="/logout" class="btn btn-dark btn-sm">Logout</a>
+</div>
+<div class="container d-flex align-items-center">
+    
+    <div class="col-sm-6 bg-light">
+      <h3>Event List</h3>
+      <ul class="events">
+        
+      <% for(let i=0; i < events.length; i++) {%>
+        <li class="events">
+          <input type="hidden" value= <%= events[i]._id%> >
+          <p>Category: <span><%= events[i].category %></span></p>
+          <p>Event Name: <span><%= events[i].eventName %></span></p>
+          <p>Date: <span><%= events[i].date%></span></p>
+          <p>Time: <span><%= events[i].time %></span></p>
+          <p>Zipcode: <span><%= events[i].zipcode %></span></p>
+          <p>Event Description: <span><%= events[i].eventDescription%></span></p>
+          <span><i class="fas fa-trash-alt"></i></span>
+        </li>
+      <% } %>
+      </ul> 
+    </div>
+    <div class="col-sm-6 bg-light">
+       <h2>Add an event</h2>
+      <%# if (user.local.email) { %>
+        <form action="/submitEvent" method="post">
+          <label for="category"></label>
+          <input type="text"  placeholder="category" name="category">
+          <label for="eventName" ></label>
+          <input type="text" placeholder="Event name" name="eventName">
+          <label for="date">Date of event:</label>
+          <input type="date" id="date" name="date">
+          <label for="time"></label>
+          <input type="time"  name="time">
+          <label class="form-label" for="zipcode">Zipcode</label>
+                    <select class="form-select" id="zipcode" aria-label="Zipcode">
+                        <option value="19149">19149</option>
+                        <option value="19150">19150</option>
+                        <option value="19151">19151</option>
+                        <option value="19019">19019</option>
+                        <option value="19093">19093</option>
+                        <option value="19092">19092</option>
+                        <option value="19099">19099</option>
+                        <option value="19101">19101</option>
+                        <option value="19103">19103</option>
+                        <option value="19102">19102</option>
+                        <option value="19104">19104</option>
+                        <option value="19107">19107</option>
+                        <option value="19109">19109</option>
+                        <option value="19110">19110</option>
+                        <option value="19112">19112</option>
+                        <option value="19115">19115</option>
+                        <option value="19119">19119</option>
+                        <option value="19120">19120</option>
+                        <option value="19105">19105</option>
+                        <option value="19106">19106</option>
+                        <option value="19108">19108</option>
+                        <option value="19111">19111</option>
+                        <option value="19113">19113</option>
+                        <option value="19114">19114</option>
+                        <option value="19116">19116</option>
+                        <option value="19118">19118</option>
+                        <option value="19121">19121</option>
+                        <option value="19122">19122</option>
+                        <option value="19125">19125</option>
+                        <option value="19128">19128</option>
+                        <option value="19129">19129</option>
+                        <option value="19123">19123</option>
+                        <option value="19124">19124</option>
+                        <option value="19126">19126</option>
+                        <option value="19127">19127</option>
+                        <option value="19130">19130</option>
+                        <option value="19131">19131</option>
+                        <option value="19132">19132</option>
+                        <option value="19133">19133</option>
+                        <option value="19136">19136</option>
+                        <option value="19137">19137</option>
+                        <option value="19140">19140</option>
+                        <option value="19141">19141</option>
+                        <option value="19144">19144</option>
+                        <option value="19145">19145</option>
+                        <option value="19148">19148</option>
+                        <option value="19134">19134</option>
+                        <option value="19135">19135</option>
+                        <option value="19138">19138</option>
+                        <option value="19139">19139</option>
+                        <option value="19142">19142</option>
+                        <option value="19143">19143</option>
+                        <option value="19146">19146</option>
+                        <option value="19147">19147</option>
+                        <option value="19152">19152</option>
+                        <option value="19153">19153</option>
+                        <option value="19155">19155</option>
+                        <option value="19160">19160</option>
+                        <option value="19170">19170</option>
+                        <option value="19172">19172</option>
+                        <option value="19173">19173</option>
+                        <option value="19154">19154</option>
+                        <option value="19161">19161</option>
+                        <option value="19162">19162</option>
+                        <option value="19171">19171</option>
+                        <option value="19175">19175</option>
+                        <option value="19178">19178</option>
+                        <option value="19182">19182</option>
+                        <option value="19183">19183</option>
+                        <option value="19185">19185</option>
+                        <option value="19187">19187</option>
+                        <option value="19176">19176</option>
+                        <option value="19177">19177</option>
+                        <option value="19179">19179</option>
+                        <option value="19181">19181</option>
+                        <option value="19184">19184</option>
+                        <option value="19188">19188</option>
+                        <option value="19192">19192</option>
+                        <option value="19194">19194</option>
+                        <option value="19195">19195</option>
+                        <option value="19197">19197</option>
+                        <option value="19244">19244</option>
+                        <option value="19190">19190</option>
+                        <option value="19191">19191</option>
+                        <option value="19193">19193</option>
+                        <option value="19196">19196</option>
+                        <option value="19255">19255</option>
+                    </select>
+          <label for="eventDescription" ></label>
+          <input type="text" placeholder="Event Description" name="eventDescription">
+          <button type="submit"class="btn btn-dark btn-sm">Submit</button>
+        </form>
+      <%# } %> 
+    </div>
+</div> 
+
+<script src="main.js"></script>
+
+</body>
+</html>
