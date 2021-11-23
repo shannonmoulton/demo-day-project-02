@@ -39,10 +39,36 @@ var upload = multer({storage: storage});
   });
   app.get('/community', function(req, res) {
     res.render('community.ejs');
-});
-app.get('/resources', function(req, res) {
+  });
+  //thread feed
+  app.get('/forum', function(req, res) {
+    let postId = ObjectId(req.params.id)
+    db.collection('threads').find().toArray((err, result) => {
+        if (err) return console.log(err)
+        res.render('forum.ejs', {
+          user: req.user,
+          threads: result
+      })
+    })
+  });
+  // individual thread page
+  app.get('/thread/:id', isLoggedIn, function(req, res) {
+    let threadId = ObjectId(req.params.id)
+    console.log(threadId)
+    db.collection('posts').find({_id: threadId}).toArray((err, result) => {
+      db.collection('comments').find({_id: threadId }).toArray((err, allComments) => {
+        if (err) return console.log(err)
+        res.render('thread.ejs', {
+          user: req.user,
+          thread: result,
+          comments: allComments
+        })
+      })
+    })
+  });
+  app.get('/resources', function(req, res) {
   res.render('resources.ejs');
-});
+  });
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -58,6 +84,22 @@ app.get('/resources', function(req, res) {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/events')
+      })
+    })
+    app.post('/createThread', upload.single('file-to-upload'), (req, res) => {
+      let user = req.user._id
+      db.collection('threads').save({title: req.body.title,description: req.body.description, img: 'images/uploads/' + req.file.filename, user: req.user.local.email,timestamp: req.body.timestamp, comments: 0}, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
+        res.redirect('/forum')
+      })
+    })
+    app.post('/makeComment/:postID', (req, res) => {
+      let postID = ObjectId(req.params.postID)
+      db.collection('comments').save({user: req.user.local.email, comment: req.body.comment, postID: postID}, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
+        res.redirect(`/thread/${postID}`) 
       })
     })
 
