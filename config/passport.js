@@ -7,7 +7,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 var User       		= require('../app/models/user');
 
 // expose this function to our app using module.exports
-module.exports = function(passport) {
+module.exports = function(passport,) {
 
 	// =========================================================================
     // passport session setup ==================================================
@@ -37,6 +37,9 @@ module.exports = function(passport) {
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
+        // profileName : 'username',
+        // zipcode: 'zipcode',
+        // image: "file-to-upload" ,
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
@@ -58,8 +61,12 @@ module.exports = function(passport) {
                 var newUser            = new User();
 
                 // set the user's local credentials
+                newUser.local.username = req.body.username;
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
+                newUser.local.zipcode = req.body.zipcode;
+                newUser.local.profilePicture = req.body.fileToUpload;
+
 
 				// save the user
                 newUser.save(function(err) {

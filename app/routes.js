@@ -86,7 +86,7 @@ var upload = multer({storage: storage});
         res.redirect('/events')
       })
     })
-    app.post('/createThread', upload.single('file-to-upload'), (req, res) => {
+    app.post('/createThread', upload.single('fileToUpload'), (req, res) => {
       let user = req.user._id
       db.collection('threads').save({title: req.body.title,description: req.body.description, img: 'images/uploads/' + req.file.filename, user: req.user.local.email,timestamp: req.body.timestamp, comments: 0}, (err, result) => {
         if (err) return console.log(err)
