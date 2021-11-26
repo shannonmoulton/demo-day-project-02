@@ -1,0 +1,12 @@
+ul, li{
+    display:inline;
+ 
+}
+li{
+    list-style: none;
+    text-decoration: none;
+   
+}
+.comment-list{
+    display:none;
+}

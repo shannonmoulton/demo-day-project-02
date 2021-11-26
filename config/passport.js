@@ -65,7 +65,7 @@ module.exports = function(passport,) {
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
                 newUser.local.zipcode = req.body.zipcode;
-                newUser.local.profilePicture = req.body.fileToUpload;
+                newUser.local.profilePicture = `images/uploads/${req.body.fileToUpload}`
 
 
 				// save the user

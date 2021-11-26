@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="/thread.css">
 
 </head>
 <body>
@@ -19,7 +19,7 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="/profile">Home</a>
               <a class="nav-link" href="/resources">Resources</a>
-              <a class="nav-link" href="/community">Community</a>
+              <!-- <a class="nav-link" href="/community">Community</a> -->
               <a class="nav-link" href="/forum">Forum</a>
               <a class="nav-link" href="/events">Events</a>
             </div>
@@ -27,28 +27,34 @@
         </div>
       </nav>
     <div class="individual-thread">
-        <% for(var i=0; i<posts.length; i++) {%>
-        <h1>Thread</h1>
+        <% for(var i=0; i<threads.length; i++) {%>
+        <h1><%= threads[i].title %></h1>
+        <h3><%= threads[i].user %></h3>
+        <!-- <img src="<%= threads[i].img %>"> -->
+        <p><%= threads[i].description%></p>
     </div>
-    
+    <button class="viewAll" >View All Comments</button>
+    <div class="comment-list">
+        <% for (let j = 0; j <comments.length; j++) {%>   
+            <ul>
+                <li class="comments">
+                  <p><b><%= comments[j].user%></b>  <%= comments[j].comment %></p>
+                 
+                </li>
+              </ul>
+        <% } %>   
+      </div> 
     <div class="comment-area">
         <form action="../makeComment/<%= threads[i]._id %>" method="POST">
             <label for="comment">Make a Comment</label>
             <textarea name="comment" id="comment"></textarea>
             <button type="submit" id="submit" class="btn btn-light">Submit</button>
           </form>
-     
-    
-        <div class="comment-list">
-            <% for (let j = 0; j <comments.length; j++) {%>   
-                <ul>
-                    <li class="comments">
-                      <h4><%= comments[j].comment %></h4>
-                      <span>-<%= comments[j].user%> </span>
-                    </li>
-                  </ul>
-            <% } %>   
+          <% } %>  
+         
+        
         </div>  
-    </div>  
+     
+    <script src="/main.js"></script>
 </body>
 </html>

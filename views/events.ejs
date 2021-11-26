@@ -20,7 +20,7 @@
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="/profile">Home</a>
           <a class="nav-link" href="/resources">Resources</a>
-          <a class="nav-link" href="/community">Community</a>
+          <!-- <a class="nav-link" href="/community">Community</a> -->
           <a class="nav-link" href="/forum">Forum</a>
           <a class="nav-link" href="/events">Events</a>
         </div>
@@ -44,27 +44,36 @@
           <p>Event Name: <span><%= events[i].eventName %></span></p>
           <p>Date: <span><%= events[i].date%></span></p>
           <p>Time: <span><%= events[i].time %></span></p>
-          <p>Zipcode: <span><%= events[i].zipcode %></span></p>
+          <p>Zipcode: <span><%= events[i].zipcode
+            %></span></p>
           <p>Event Description: <span><%= events[i].eventDescription%></span></p>
-          <span><i class="fas fa-trash-alt"></i></span>
+          <p class="postedBy">Posted By: <%= events[i].user %></p>
+          <span><i class="fas fa-save"></i></span>
+        
+
+          <% if (user.local.username  === events[i].user) { %> 
+            <span><i class="fas fa-trash-alt"></i></span>
+        <% } %>
+
+          
         </li>
       <% } %>
       </ul> 
     </div>
     <div class="col-sm-6 bg-light">
        <h2>Add an event</h2>
-      <%# if (user.local.email) { %>
+      <% if (user.local.email) { %>
         <form action="/submitEvent" method="post">
-          <label for="category"></label>
-          <input type="text"  placeholder="category" name="category">
-          <label for="eventName" ></label>
-          <input type="text" placeholder="Event name" name="eventName">
+          <label for="category">Category: </label>
+          <input type="text"  placeholder="category" name="category"><br>
+          <label for="eventName" > Event name:</label>
+          <input type="text" placeholder="Event name" name="eventName"><br>
           <label for="date">Date of event:</label>
-          <input type="date" id="date" name="date">
-          <label for="time"></label>
-          <input type="time"  name="time">
-          <label class="form-label" for="zipcode">Zipcode</label>
-                    <select class="form-select" id="zipcode" aria-label="Zipcode">
+          <input type="date" id="date" name="date"><br>
+          <label for="time"> Time:</label>
+          <input type="time"  name="time"><br>
+          <label class="form-label" for="zipcode">Zipcode: </label>
+                    <select class="form-select" name="zipcode" id="zipcode" aria-label="Zipcode">
                         <option value="19149">19149</option>
                         <option value="19150">19150</option>
                         <option value="19151">19151</option>
@@ -153,11 +162,11 @@
                         <option value="19196">19196</option>
                         <option value="19255">19255</option>
                     </select>
-          <label for="eventDescription" ></label>
-          <input type="text" placeholder="Event Description" name="eventDescription">
+          <label for="eventDescription" >Description: </label>
+          <input type="text" placeholder="Event Description" name="eventDescription"><br>
           <button type="submit"class="btn btn-dark btn-sm">Submit</button>
         </form>
-      <%# } %> 
+      <% } %> 
     </div>
 </div> 
 

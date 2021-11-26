@@ -22,7 +22,7 @@ var upload = multer({storage: storage});
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
-            user : req.user,
+            user : req.user, 
             messages: result
           })
         })
@@ -37,9 +37,16 @@ var upload = multer({storage: storage});
         })
       })
   });
-  app.get('/community', function(req, res) {
-    res.render('community.ejs');
-  });
+  app.get('/resources', isLoggedIn, function(req, res) {
+    db.collection('resources').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('resources.ejs', {
+        user : req.user,
+        resources: result
+      })
+    })
+});
+ 
   //thread feed
   app.get('/forum', function(req, res) {
     let postId = ObjectId(req.params.id)
@@ -52,24 +59,20 @@ var upload = multer({storage: storage});
     })
   });
   // individual thread page
-  app.get('/thread/:id', isLoggedIn, function(req, res) {
-    let threadId = ObjectId(req.params.id)
+  app.get('/thread/:threadId', isLoggedIn, function(req, res) {
+    let threadId = ObjectId(req.params.threadId)
     console.log(threadId)
-    db.collection('posts').find({_id: threadId}).toArray((err, result) => {
-      db.collection('comments').find({_id: threadId }).toArray((err, allComments) => {
+    db.collection('threads').find({_id: threadId}).toArray((err, result) => {
+      db.collection('comments').find({threadId: threadId }).toArray((err, allComments) => {
         if (err) return console.log(err)
         res.render('thread.ejs', {
           user: req.user,
-          thread: result,
+          threads: result,
           comments: allComments
         })
       })
     })
   });
-  app.get('/resources', function(req, res) {
-  res.render('resources.ejs');
-  });
-
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -79,8 +82,9 @@ var upload = multer({storage: storage});
 // message board routes ===============================================================
 
     app.post('/submitEvent', (req, res) => {
+      let user = req.user._id
       db.collection('events').save({category: req.body.category, 
-        eventName: req.body.eventName,date: req.body.date, time: req.body.time, zipcode: req.body.zipcode, eventDescription: req.body.eventDescription}, (err, result) => {
+        eventName: req.body.eventName,date: req.body.date, time: req.body.time, zipcode: req.body.zipcode, eventDescription: req.body.eventDescription,user: req.user.local.username}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/events')
@@ -88,23 +92,23 @@ var upload = multer({storage: storage});
     })
     app.post('/createThread', upload.single('fileToUpload'), (req, res) => {
       let user = req.user._id
-      db.collection('threads').save({title: req.body.title,description: req.body.description, img: 'images/uploads/' + req.file.filename, user: req.user.local.email,timestamp: req.body.timestamp, comments: 0}, (err, result) => {
+      db.collection('threads').save({title: req.body.title,description: req.body.description, img: 'images/uploads/' + req.file.filename, user: req.user.local.username,timestamp: req.body.timestamp, comments: 0}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/forum')
       })
     })
-    app.post('/makeComment/:postID', (req, res) => {
-      let postID = ObjectId(req.params.postID)
-      db.collection('comments').save({user: req.user.local.email, comment: req.body.comment, postID: postID}, (err, result) => {
+    app.post('/makeComment/:threadId', (req, res) => {
+      let threadId = ObjectId(req.params.threadId)
+      db.collection('comments').save({user: req.user.local.username, comment: req.body.comment, threadId: threadId}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect(`/thread/${postID}`) 
+        res.redirect(`/thread/${threadId}`) 
       })
     })
 
-    // app.put('/messages', (req, res) => {
-    //   db.collection('messages')
+    // app.put('/savedItems', (req, res) => {
+    //   db.collection('savedItems')
     //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     //     $set: {
     //       thumbUp:req.body.thumbUp + 1
