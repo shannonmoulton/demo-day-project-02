@@ -2,7 +2,8 @@ body{
     background-color: white;
     word-wrap:break-word;
     font-family: 'DM Sans';
-    background-image: url('/img/greenBackground.jpeg');
+    background-image: url('/img/tealBackground.png');
+    background-size: cover;
 }
 main {
     width: 100%;

@@ -1,5 +1,5 @@
 body{
-    background-image: url('/img/greenBackground.jpeg');
+    background-color: white;
 }
 h1{
     text-align: center;
@@ -7,11 +7,7 @@ h1{
 }
 table{
     background-color: white;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
 }
-td,th{
-    padding-left: 10px;
-    padding-right:10px;
+.fa-save{
+    margin-left: 20px;
 }

@@ -73,21 +73,7 @@ var upload = multer({storage: storage});
       })
     })
   });
-  //get saved items
-  // app.get('/savedItems', isLoggedIn, function(req, res) {
-  //   let threadId = ObjectId(req.params.threadId)
-  //   console.log(threadId)
-  //   db.collection('threads').find({_id: threadId}).toArray((err, result) => {
-  //     db.collection('comments').find({threadId: threadId }).toArray((err, allComments) => {
-  //       if (err) return console.log(err)
-  //       res.render('thread.ejs', {
-  //         user: req.user,
-  //         threads: result,
-  //         comments: allComments
-  //       })
-  //     })
-  //   })
-  // });
+  
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -116,6 +102,14 @@ var upload = multer({storage: storage});
     app.post('/makeComment/:threadId', (req, res) => {
       let threadId = ObjectId(req.params.threadId)
       db.collection('comments').save({user: req.user.local.username, comment: req.body.comment, threadId: threadId}, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
+        res.redirect(`/thread/${threadId}`) 
+      })
+    })
+    app.post('/savedItems', (req, res) => {
+      let threadId = ObjectId(req.params.threadId)
+      db.collection('').save({user: req.user.local.username, comment: req.body.comment, threadId: threadId}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect(`/thread/${threadId}`) 

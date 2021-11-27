@@ -23,7 +23,6 @@
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="/profile">Home</a>
             <a class="nav-link" href="/resources">Resources</a>
-            <!-- <a class="nav-link" href="/community">Community</a> -->
             <a class="nav-link" href="/forum">Forum</a>
             <a class="nav-link" href="/events">Events</a>
           </div>
@@ -47,7 +46,7 @@
       <% for(var i=0; i<resources.length; i++) {%>
       <tbody>
         <tr>
-          <td><%= resources[i].name %></td>
+          <td value="<%= resources[i]._id%>"><%= resources[i].name %></td>
           <td><%= resources[i].description %></td>
           <td><%= resources[i].location %></td>
           <td><%= resources[i].contact%></td>
@@ -63,5 +62,6 @@
  
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script src="resources.js"></script>
   </body>
 </html>
