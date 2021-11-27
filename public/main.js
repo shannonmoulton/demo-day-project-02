@@ -1,18 +1,46 @@
 // function initMap() {
-//   // The location of Uluru
-//   const uluru = { lat: -25.344, lng: 131.036 };
-//   // The map, centered at Uluru
+//   // The location of userLocation
+//   const userLocation = { lat: -25.344, lng: 131.036 };
+//   // The map, centered at userLocation
 //   const map = new google.maps.Map(document.getElementById("map"), {
 //     zoom: 4,
 //     center: uluru,
 //   });
-//   // The marker, positioned at Uluru
+//   // The marker, positioned at userLocation
 //   const marker = new google.maps.Marker({
-//     position: uluru,
+//     position: userLocation,
 //     map: map,
 //   });
 // }
 
+
+
+var geocoder;
+var map;
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var mapOptions = {
+    zoom: 10,
+    center: latlng
+  }
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+
+function codeAddress() {
+  var address = document.getElementById('address').value;
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
 
 
 // Create the script tag, set the appropriate attributes
@@ -28,39 +56,13 @@
 // Append the 'script' element to 'head'
 // document.head.appendChild(script);
 
-
-// var thumbUp = document.getElementsByClassName("fa-thumbs-up");
 const trash = document.getElementsByClassName("fa-trash-alt");
 const save = document.getElementsByClassName("fa-save");
 
 
-// Array.from(thumbUp).forEach(function (element) {
-//   element.addEventListener("click", function () {
-//     const name = this.parentNode.parentNode.childNodes[1].innerText;
-//     const msg = this.parentNode.parentNode.childNodes[3].innerText;
-//     const thumbUp = parseFloat(
-//       this.parentNode.parentNode.childNodes[5].innerText
-//     );
-//     fetch("messages", {
-//       method: "put",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         name: name,
-//         msg: msg,
-//         thumbUp: thumbUp,
-//         thumbDown: thumbDown,
-//       }),
-//     })
-//       .then((response) => {
-//         if (response.ok) return response.json();
-//       })
-//       .then((data) => {
-//         console.log(data);
-//         window.location.reload(true);
-//       });
-//   });
-// });
 
+
+//delete event
 Array.from(trash).forEach(function (element) {
   element.addEventListener("click", function () {
      let id = this.parentNode.parentNode.childNodes[1].value
@@ -79,11 +81,13 @@ Array.from(trash).forEach(function (element) {
     });
   });
 });
+
+//save items
 Array.from(save).forEach(function (element) {
   element.addEventListener("click", function () {
      let id = this.parentNode.parentNode.childNodes[17].value
     fetch("/savedItems", {
-      method: 'put',
+      method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -96,6 +100,8 @@ Array.from(save).forEach(function (element) {
     });
   });
 });
+
+// individual thread comments
 document.querySelector('.viewAll').addEventListener('click',viewAll);
 
 function viewAll() {
@@ -109,6 +115,32 @@ function viewAll() {
   
 }
 
+//modal
+// Get the modal
+var modal = document.getElementById("modalModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
 //resource table
 $(document).ready( function () {

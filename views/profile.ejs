@@ -13,14 +13,13 @@
     <link rel="stylesheet" href="profile.css">
 </head>
 
-<body>
+<body onload="initialize()">
   <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
           <a class="nav-link" href="/resources">Resources</a>
-          <!-- <a class="nav-link" href="/community">Community</a> -->
           <a class="nav-link" href="/forum">Forum</a>
           <a class="nav-link" href="/events">Events</a>
         </div>
@@ -43,15 +42,16 @@
               <h3><span class="fa fa-user"></span> My account</h3>
               <% if (user.local.email) { %>
                   <p>
-                      <strong>id</strong>: <%= user._id %><br>
-                      <img src=" <%= user.local.profilePicture%>">
+                      <!-- <strong>id</strong>: <%= user._id %><br> -->
+                      <img src=" <%= user.local.profilePicture%>"><br>
                       <strong>username</strong>: <%= user.local.username %><br>
                       <strong>email</strong>: <%= user.local.email %><br>
-                      <strong>password</strong>: <%= user.local.password %>
+                      
+                      <!-- <strong>password</strong>: <%= user.local.password %> -->
                   </p>
-                  <a href="/unlink/local" class="btn btn-dark">Unlink</a>
+                  <!-- <a href="/unlink/local" class="btn btn-dark">Unlink</a> -->
               <% } else { %>
-                  <a href="/connect/local" class="btn btn-dark">Connect Local</a>
+                  <!-- <a href="/connect/local" class="btn btn-dark">Connect Local</a> -->
               <% } %>
             </div>
           </div>
@@ -61,7 +61,11 @@
           <div class="card">
             <div class="card-body">
               <h1>What's near me?</h1>
-              <div id="map"></div>
+              <div id="map" style="width: 600px; height: 480px;"></div>
+              <div>
+                <input id="address" display="hidden" value="<%= user.local.zipcode %>"></input>
+                <input type="button" value="Encode" onclick="codeAddress()">
+              </div>
             </div>
           </div>
         </div>
@@ -78,95 +82,6 @@
       </div>
     </div>
    
-
-
-
-
-
-
-<!-- <div class="container">
-
-    <div class="page-header text-center">
-        <h1>Welcome, <span><%= user.local.email %></span>!</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
-
-    <div class="row"> -->
-
-        <!-- LOCAL INFORMATION -->
-        <!-- <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> My account</h3>
-
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>username</strong>: <%= user.local.username %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-
-            </div>
-        </div> -->
-        
-
-
-
-
-
-        
-        <!-- <div class="col-sm-6">
-          <h3>Messages</h3>
-          <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span><%= messages[i].name %></span>
-              <span><%= messages[i].msg %></span>
-              <span><%= messages[i].thumbUp %></span>
-              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-            </li>
-          <% } %>
-          </ul>
-
-          <h2>Add a message</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <input type="text" value="<%= user.local.email %>" name="name">
-            <input type="text" placeholder="message" name="msg">
-            <button type="submit">Submit</button>
-          </form>
-        </div> -->
-
-
-
-
-        <!-- <% } %>
-
-</div> -->
-<script>
-  // Initialize and add the map
-  function initMap() {
-    // The location of Uluru
-    const uluru = { lat: -25.344, lng: 131.036 };
-    // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 4,
-      center: uluru,
-    });
-    // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-      position: uluru,
-      map: map,
-    });
-  }
-</script>
 <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsV4es_wQi7dahHqQ-s4frelGRcFC2Cbw&callback=initMap&libraries=&v=weekly"
       async

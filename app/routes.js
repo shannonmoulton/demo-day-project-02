@@ -73,6 +73,21 @@ var upload = multer({storage: storage});
       })
     })
   });
+  //get saved items
+  // app.get('/savedItems', isLoggedIn, function(req, res) {
+  //   let threadId = ObjectId(req.params.threadId)
+  //   console.log(threadId)
+  //   db.collection('threads').find({_id: threadId}).toArray((err, result) => {
+  //     db.collection('comments').find({threadId: threadId }).toArray((err, allComments) => {
+  //       if (err) return console.log(err)
+  //       res.render('thread.ejs', {
+  //         user: req.user,
+  //         threads: result,
+  //         comments: allComments
+  //       })
+  //     })
+  //   })
+  // });
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -121,6 +136,7 @@ var upload = multer({storage: storage});
     //     res.send(result)
     //   })
     // })
+    
 
     // app.put('/thumbDown', (req, res) => {
     //   db.collection('messages')
