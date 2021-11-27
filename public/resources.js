@@ -3,18 +3,16 @@ $(document).ready( function () {
     $('#table_id').DataTable();
   } );
 
+  // save resource
   const save = document.getElementsByClassName("fa-save");
-  let savedItems = { resource: [], event: []};
 
   Array.from(save).forEach(function (element) {
-    element.addEventListener("click", function () {
-      //  let id = this.parentNode.parentNode.childNodes[0].value
-       let id = document.querySelector("#table_id > tbody:nth-child(2) > tr > td.sorting_1").value
-       console.log(id)
-       
-      //  savedItems[id].push()
-      //  console.log(savedItems)
-      // fetch("/savedItems", {
+    element.addEventListener("click", function (e) {
+         const save = this.parentNode.childNodes[0]
+         const id = e.target.dataset.id
+         console.log(id)
+
+      // fetch("/savedResources", {
       //   method: 'post',
       //   headers: {
       //     'Content-Type': 'application/json',

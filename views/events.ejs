@@ -43,13 +43,14 @@
       <th>Description</th>
       <th>Date</th>
       <th>Time</th>
-      <th>Zipcode</th>
+      <th>Location</th>
       <th>Save/Delete</th>
     </tr>
   </thead>
   <% for(var i=0; i<events.length; i++) {%>
   <tbody>
     <tr>
+      <input type="hidden" value= <%= events[i]._id%> >
       <td><%= events[i].category %></td>
       <td><%= events[i].eventName %></td>
       <td><%= events[i].user %></td>
@@ -60,10 +61,10 @@
       <td><%= events[i].zipcode %></td>
       <td>
         <% if (user.local.username  === events[i].user) { %> 
-          <span><i class="fas fa-trash-alt"></i></span>
-          <% } else { %>
-            <span><i class="fas fa-save"></i></span>
-          <% } %>
+          <span><i class="fas fa-trash-alt" data-id="<%= events[i]._id%>"></i></span>
+          <% } else { %> 
+           <span><i class="fas fa-save" data-id="<%= events[i]._id%>"  ></i></span>
+          <% } %> 
           
       </td>
      

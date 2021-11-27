@@ -29,9 +29,9 @@ const trash = document.getElementsByClassName("fa-trash-alt");
 const save = document.getElementsByClassName("fa-save");
 
 Array.from(trash).forEach(function (element) {
-  element.addEventListener("click", function () {
-     let id = this.parentNode.parentNode.childNodes[2].value
-     console.log(this.parentNode.parentNode.childNodes)
+  element.addEventListener("click", function (e) {
+     const id = e.target.dataset.id
+     console.log(id)
     fetch("/delete", {
       method: 'delete',
       headers: {
@@ -47,9 +47,11 @@ Array.from(trash).forEach(function (element) {
   });
 });
 
+
 Array.from(save).forEach(function (element) {
-  element.addEventListener("click", function () {
-     let id = this.parentNode.parentNode.childNodes[0].value
+  element.addEventListener("click", function (e) {
+    const id = e.target.dataset.id
+    console.log(id)
     fetch("/savedItems", {
       method: 'post',
       headers: {

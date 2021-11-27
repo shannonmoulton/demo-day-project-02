@@ -107,12 +107,12 @@ var upload = multer({storage: storage});
         res.redirect(`/thread/${threadId}`) 
       })
     })
-    app.post('/savedItems', (req, res) => {
+    app.post('/savedResources', (req, res) => {
       let threadId = ObjectId(req.params.threadId)
-      db.collection('').save({user: req.user.local.username, comment: req.body.comment, threadId: threadId}, (err, result) => {
+      db.collection('savedResources').save({user: req.user.local.username, comment: req.body.comment, threadId: threadId}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect(`/thread/${threadId}`) 
+        res.redirect('/') 
       })
     })
 
@@ -184,6 +184,14 @@ var upload = multer({storage: storage});
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
+        // app.post('/signup',  upload.single('fileToUpload'), (req, res) => {
+        //   let user = req.user._id
+        //   db.collection('user').save({ img: 'images/uploads/' + req.file.filename}, (err, result) => {
+        //     if (err) return console.log(err)
+        //     console.log('saved to database')
+        //     res.redirect('/profile')
+        //   })
+        // })
 
 // =============================================================================
 // UNLINK ACCOUNTS =============================================================
