@@ -1,28 +1,36 @@
 //resource table
-$(document).ready( function () {
-    $('#table_id').DataTable();
-  } );
+// $(document).ready( function () {
+//     $('#example').DataTable();
+//   } );
+$(document).ready(function () {
+  $('#table').DataTable({
+    "paging": true,
+    "ordering": true,
+    "info": false,
+    stateSave: true
+  });
+});
+// save resource
+const save = document.getElementsByClassName("fa-save");
+const currentUserId = document.getElementById("currentUserId").innerText
 
-  // save resource
-  const save = document.getElementsByClassName("fa-save");
+Array.from(save).forEach(function (element) {
+  element.addEventListener("click", function () {
+    const save = this.parentNode.childNodes[0]
+    const id = this.dataset.id
+    console.log(id)
+    fetch("savedResources", {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'id': id,
 
-  Array.from(save).forEach(function (element) {
-    element.addEventListener("click", function (e) {
-         const save = this.parentNode.childNodes[0]
-         const id = e.target.dataset.id
-         console.log(id)
-
-      // fetch("/savedResources", {
-      //   method: 'post',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     'id': id
-          
-      //   })
-      // }).then(function (response) {
-      //   window.location.reload();
-      // });
+      })
+    }).then(function (response) {
+      window.location.reload();
     });
   });
+});
+console.log('anything haha!')
