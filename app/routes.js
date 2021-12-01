@@ -19,8 +19,8 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   app.get('/profile', isLoggedIn, function (req, res) {
     db.collection('events').find().toArray((err, result) => {
       db.collection('users').find().toArray((err, allUsers) => {
-        db.collection('messages').find({ user: req.user.local.email }).toArray((err, allMessages) => {
-          db.collection('savedResources').find().toArray((err, allSavedResources) => {
+        db.collection('messages').find({ user: req.user.local.username }).toArray((err, allMessages) => {
+          db.collection('savedResources').find({ user: req.user.local.username }).toArray((err, allSavedResources) => {
             if (err) return console.log(err)
             console.log(allUsers)
             res.render('profile.ejs', {
@@ -140,7 +140,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
 
   app.post('/savedResources', (req, res) => {
     db.collection('resources').findOne({ _id: ObjectId(req.body.id) }, (err, result) => {
-      db.collection('savedResources').insertOne({ name: result.name, website: result.website }, (err, result) => {
+      db.collection('savedResources').insertOne({ name: result.name, website: result.website, user: req.user.local.username, }, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
 
@@ -151,20 +151,20 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   })
 
 
-  // app.put('/savedItems', (req, res) => {
-  //   db.collection('savedItems')
-  //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-  //     $set: {
-  //       thumbUp:req.body.thumbUp + 1
-  //     }
-  //   }, {
-  //     sort: {_id: -1},
-  //     upsert: true
-  //   }, (err, result) => {
-  //     if (err) return res.send(err)
-  //     res.send(result)
-  //   })
-  // })
+  app.put('/editUsername', (req, res) => {
+    db.collection('users')
+      .findOneAndUpdate({ _id: ObjectId(req.body.id) }, {
+        $set: {
+          username: req.body.username
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
 
 
   // app.put('/thumbDown', (req, res) => {

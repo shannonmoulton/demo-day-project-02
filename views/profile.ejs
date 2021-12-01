@@ -45,17 +45,18 @@
           <div class="card">
             <div class="card-body">
               <!-- LOCAL INFORMATION -->
-              <h2><span class="fa fa-user"></span> My account</h2>
+              <h2> My account</h2>
               <% if (user.local.email) { %>
                 <p>
-
                   <img src=" <%= user.local.img%>"><br>
-                  <strong>username</strong>: <%= user.local.username %><br>
-                    <strong>email</strong>: <%= user.local.email %><br>
+                  <strong>Username</strong>: <%= user.local.username %> <i class="fas fa-edit"
+                      data-id="<%= user._id%>"></i><br>
+                    <strong>Email</strong>: <%= user.local.email %> <i class="fas fa-edit"
+                        data-id="<%= user._id%>"></i><br>
+                      <strong>Location</strong>: <%= user.local.zipcode %> <i class="fas fa-edit"
+                          data-id="<%= user._id%>"></i><br>
                 </p>
-                <% } else { %>
-                  <!-- <a href="/connect/local" class="btn btn-dark">Connect Local</a> -->
-                  <% } %>
+                <% } %>
             </div>
 
           </div>
@@ -70,9 +71,6 @@
                   <span>
                     <%= messages[i].msg %>
                   </span>
-                  <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-                  <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-                  <span><i class="fa fa-trash" aria-hidden="true"></i></span>
                 </li>
                 <% } %>
             </ul>
@@ -90,7 +88,7 @@
                 <span><img src="http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png"
                     style="width: 32px; height: 32px;">Events</span>
               </div>
-              <div id="map" style="width: 600px; height: 480px;"></div>
+              <div id="map" style="width: 100%; height: 480px;"></div>
               <div>
                 <p id="address" hidden value="<%= user.local.zipcode %>"></p>
               </div>
@@ -123,16 +121,18 @@
   </div>
 
   <div class="chat-popup" id="myForm">
-    <form action="../messages/<%= users[i].local.username%>" class="form-container">
+    <form action="../messages/<%= user._id %>" method="POST" class="form-container">
       <h1>Chat</h1>
 
-      <label for="msg"><b>Message</b></label>
+      <label for="msg"><b>Message </b></label>
       <textarea placeholder="Type message.." name="msg" required></textarea>
 
       <button type="submit" class="btn">Send</button>
       <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
   </div>
+
+
 
   <script src="main.js"></script>
 
@@ -151,6 +151,8 @@
       showEvent("<%= events[i].eventName%>", "<%= events[i].location%>", "<%= events[i].eventWebsite%>")
       <% } %>
   </script>
+
+
 </body>
 
 </html>

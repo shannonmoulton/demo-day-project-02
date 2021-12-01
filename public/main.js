@@ -1,17 +1,3 @@
-// function initMap() {
-//   // The location of userLocation
-//   const userLocation = { lat: -25.344, lng: 131.036 };
-//   // The map, centered at userLocation
-//   const map = new google.maps.Map(document.getElementById("map"), {
-//     zoom: 4,
-//     center: uluru,
-//   });
-//   // The marker, positioned at userLocation
-//   const marker = new google.maps.Marker({
-//     position: userLocation,
-//     map: map,
-//   });
-// }
 var geocoder;
 var map;
 var userLocation = document.getElementById('address').value;
@@ -57,7 +43,7 @@ function showCurrentUser(userLocation) {
     }
   });
 }
-
+// Chatbox
 function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
@@ -72,7 +58,7 @@ function showAllUsers(userName, userZipcode) {
       const userInfo =
         '<div class="chip">' +
         '<img src="https://www.w3schools.com/howto/img_avatar2.png" width="96" height="96">' + userName +
-        '<i class="fas fa-comment-dots" onclick="openForm()"></i>' +
+        '<i class="fas fa-comment-dots" data-id="<%= users[i]._id%> onclick="openForm()"></i>' +
         '</div>';
       const infowindow = new google.maps.InfoWindow({
         content: userInfo,
@@ -96,7 +82,6 @@ function showAllUsers(userName, userZipcode) {
 }
 
 function showEvent(eventName, eventAddress, eventWebsite) {
-  console.log(eventName, eventAddress)
   geocoder.geocode({ 'address': eventAddress }, function (results, status) {
     if (status == 'OK') {
       const eventInfo =
@@ -150,4 +135,32 @@ Array.from(trash).forEach(function (element) {
   });
 });
 
+//Edit Account Details
 
+const edit = document.getElementsByClassName('fa-edit');
+
+Array.from(edit).forEach(function (element) {
+  element.addEventListener('click', function (e) {
+
+    // const username = this.parentNode.childNodes[5].innerText
+    // const email = this.parentNode.childNodes[10].innerText
+    // const location = this.parentNode.childNodes[15].innerText
+    const id = e.target.dataset.id
+    console.log(name)
+
+    // fetch('editUsername', {
+    //   method: 'put',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     'id': id
+    //   })
+    // })
+    //   .then(response => {
+    //     if (response.ok) return response.json()
+    //   })
+    //   .then(data => {
+    //     console.log(data)
+    //     window.location.reload(true)
+    //   })
+  });
+});

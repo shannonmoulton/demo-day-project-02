@@ -18,7 +18,7 @@ Array.from(save).forEach(function (element) {
   element.addEventListener("click", function () {
     const save = this.parentNode.childNodes[0]
     const id = this.dataset.id
-    console.log(id)
+    alert("Saved to profile");
     fetch("savedResources", {
       method: 'post',
       headers: {
@@ -33,4 +33,3 @@ Array.from(save).forEach(function (element) {
     });
   });
 });
-console.log('anything haha!')
