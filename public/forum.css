@@ -26,8 +26,8 @@ h1{
   }
   
   #myTable th, #myTable td {
-    text-align: left; /* Left-align text */
-    padding: 12px; /* Add padding */
+    text-align: left; 
+    padding: 12px; 
   }
   
   #myTable tr {

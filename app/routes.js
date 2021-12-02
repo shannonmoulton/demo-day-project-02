@@ -100,8 +100,6 @@ module.exports = function (app, passport, db, multer, ObjectId) {
     })
   });
 
-
-
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
@@ -159,6 +157,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       })
     })
   })
+
   app.post('/savedEvents', (req, res) => {
     db.collection('events').findOne({ _id: ObjectId(req.body.id) }, (err, result) => {
       db.collection('savedEvents').insertOne({
@@ -172,24 +171,29 @@ module.exports = function (app, passport, db, multer, ObjectId) {
     })
   })
 
+  //put
+  app.put('/updateComments', (req, res) => {
+    db.collection('threads')
+      .findOneAndUpdate({ _id: ObjectId(req.body.id) }, {
+        $set: {
+          comments: req.body.comments - 1
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
 
-
-
-  // app.put('/thumbDown', (req, res) => {
-  //   db.collection('messages')
-  //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-  //     $set: {
-  //       thumbUp:req.body.thumbUp - 1
-  //     }
-  //   }, {
-  //     sort: {_id: -1},
-  //     upsert: true
-  //   }, (err, result) => {
-  //     if (err) return res.send(err)
-  //     res.send(result)
-  //   })
-  // })
-
+  //delete
+  app.delete('/deleteMessage', (req, res) => {
+    db.collection('messages').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
   app.delete('/delete', (req, res) => {
     db.collection('events').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
       if (err) return res.send(500, err)
@@ -205,6 +209,18 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   })
   app.delete('/deleteSavedEvents', (req, res) => {
     db.collection('savedEvents').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
+  app.delete('/deleteThread', (req, res) => {
+    db.collection('threads').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
+  app.delete('/deleteComment', (req, res) => {
+    db.collection('comments').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
       if (err) return res.send(500, err)
       res.send('Message deleted!')
     })

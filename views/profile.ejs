@@ -48,7 +48,7 @@
               <h2> My account</h2>
               <% if (user.local.email) { %>
                 <p>
-                  <img src="images/uploads/<%= user.local.img%>"><br>
+                  <img src="images/uploads/<%= user.local.img%>" class="profileImg"><br>
                   <strong>Username</strong>: <%= user.local.username %> <br>
                     <strong>Email</strong>: <%= user.local.email %> <br>
                       <strong>Location</strong>: <%= user.local.zipcode %> <br>
@@ -68,6 +68,7 @@
                   </span>
                   <span>
                     <%= messages[i].msg %>
+                      <span><i class="fas fa-trash-alt" data-id="<%= messages[i]._id%>"></i></span>
                   </span>
                 </li>
                 <% } %>

@@ -23,6 +23,9 @@ body{
     object-fit: contain;
     
   }
+  .fa-trash-alt{
+    margin-left: 10px;
+  }
   .w-96{
     width: 35rem;
   }
@@ -57,4 +60,7 @@ button{
   margin-left: 10px;
   margin-bottom: 10px;
 
+}
+#comment{
+  width: 80%;
 }

@@ -42,7 +42,6 @@
         </tr>
         <% for(var i=0; i<threads.length; i++) {%>
             <tr>
-
                 <td>
                     <a href="/thread/<%= threads[i]._id%>">
                         <%= threads[i].title %>
@@ -53,38 +52,42 @@
                 </td>
                 <td>
                     <%= threads[i].user %>
+                        <% if (user.local.username===threads[i].user) { %>
+                            <span><i class="fas fa-trash-alt" data-id="<%= threads[i]._id%>"></i></span>
+                            <% } %>
                 </td>
-
             </tr>
             <% } %>
     </table>
 
 
+    <% for(var i=0; i<threads.length; i++) {%>
 
+        <% } %>
 
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div class="formSection">
+                        <% if (user.local.email) { %>
+                            <form action="/createThread" enctype="multipart/form-data" method="post">
+                                <label for="title">Title:</label>
+                                <input type="text" name="title" placeholder="title" class="title formInput">
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" placeholder="description"
+                                    class="description formInput">
+                                <label for="description">Image:</label>
+                                <input type="file" name="file-to-upload" class="formInput">
+                                <button class="submit" type="submit">Submit</button>
+                            </form>
+                            <% } %>
+                    </div>
+                </div>
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="formSection">
-                <% if (user.local.email) { %>
-                    <form action="/createThread" enctype="multipart/form-data" method="post">
-                        <label for="title">Title:</label>
-                        <input type="text" name="title" placeholder="title" class="title formInput">
-                        <label for="description">Description:</label>
-                        <input type="text" name="description" placeholder="description" class="description formInput">
-                        <label for="description">Image:</label>
-                        <input type="file" name="file-to-upload" class="formInput">
-                        <button class="submit" type="submit">Submit</button>
-                    </form>
-                    <% } %>
-            </div>
-        </div>
-
-        <script src="forum.js"></script>
+                <script src="forum.js"></script>
 </body>
 
 </html>
