@@ -23,52 +23,63 @@
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="/profile">Home</a>
           <a class="nav-link" href="/resources">Resources</a>
-          <!-- <a class="nav-link" href="/community">Community</a> -->
           <a class="nav-link" href="/forum">Forum</a>
           <a class="nav-link" href="/events">Events</a>
         </div>
       </div>
     </div>
   </nav>
-  <div class="individual-thread">
-    <% for(var i=0; i<threads.length; i++) {%>
-      <h1>
-        <%= threads[i].title %>
-      </h1>
-      <h3>
-        <%= threads[i].user %>
-      </h3>
+  <div class="container">
+    <div class="row box mt-5 mb-5">
 
-      <img src="<%= threads[i].img%>">
-      <p>
-        <%= threads[i].description%>
-      </p>
+
+      <div class=" mt-5">
+        <div class="individual-thread">
+          <% for(var i=0; i<threads.length; i++) {%>
+            <h1>
+              <%= threads[i].title %>
+            </h1>
+            <h3>
+              Posted By:
+              <%= threads[i].user %>
+            </h3>
+
+            <img src="<%= threads[i].img%>">
+            <p class="description">
+              <%= threads[i].description%>
+            </p>
+        </div>
+        <hr>
+
+        <h2 class="commentHeading">Comments</h2>
+        <div class="commentSection">
+          <% for (let j=0; j <comments.length; j++) {%>
+            <ul>
+              <li class="comments">
+                <p><b>
+                    <%= comments[j].user%>:
+                  </b>
+                  <%= comments[j].comment %>
+                </p>
+
+              </li>
+            </ul>
+            <% } %>
+        </div>
+        <div class="comment-area">
+          <form action="../makeComment/<%= threads[i]._id %>" method="POST">
+            <label for="comment">Make a Comment</label>
+            <input type="text" name="comment" id="comment"></textarea>
+            <button type="submit" id="submit" class="btn btn-light">Submit</button>
+          </form>
+          <% } %>
+
+
+        </div>
+      </div>
+    </div>
   </div>
-  <button class="viewAll">View All Comments</button>
-  <div class="comment-list">
-    <% for (let j=0; j <comments.length; j++) {%>
-      <ul>
-        <li class="comments">
-          <p><b>
-              <%= comments[j].user%>
-            </b>
-            <%= comments[j].comment %>
-          </p>
 
-        </li>
-      </ul>
-      <% } %>
-  </div>
-  <div class="comment-area">
-    <form action="../makeComment/<%= threads[i]._id %>" method="POST">
-      <label for="comment">Make a Comment</label>
-      <textarea name="comment" id="comment"></textarea>
-      <button type="submit" id="submit" class="btn btn-light">Submit</button>
-    </form>
-    <% } %>
-
-
-  </div>
 
   <script src="/thread.js"></script>
 </body>

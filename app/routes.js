@@ -5,7 +5,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       cb(null, 'public/images/uploads')
     },
     filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now() + ".png")
+      cb(null, `${Date.now()}-${file.originalname}`);
     }
   });
   var upload = multer({ storage: storage });
@@ -17,18 +17,24 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   });
 
   app.get('/profile', isLoggedIn, function (req, res) {
+    let userId = req.user._id
     db.collection('events').find().toArray((err, result) => {
       db.collection('users').find().toArray((err, allUsers) => {
-        db.collection('messages').find({ user: req.user.local.username }).toArray((err, allMessages) => {
-          db.collection('savedResources').find({ user: req.user.local.username }).toArray((err, allSavedResources) => {
-            if (err) return console.log(err)
-            console.log(allUsers)
-            res.render('profile.ejs', {
-              user: req.user,
-              events: result,
-              users: allUsers,
-              messages: allMessages,
-              savedResources: allSavedResources
+        db.collection('messages').find({ to: userId.toString() }).toArray((messageErr, allMessages) => {
+          db.collection('savedEvents').find({ user: req.user.local.username }).toArray((err, allSavedEvents) => {
+            db.collection('savedResources').find({ user: req.user.local.username }).toArray((err, allSavedResources) => {
+              if (err) return console.log(err)
+              console.log(allMessages)
+              console.log(userId)
+              console.log(messageErr)
+              res.render('profile.ejs', {
+                user: req.user,
+                events: result,
+                users: allUsers,
+                messages: allMessages,
+                savedEvents: allSavedEvents,
+                savedResources: allSavedResources
+              })
             })
           })
         })
@@ -36,11 +42,14 @@ module.exports = function (app, passport, db, multer, ObjectId) {
     })
   });
   app.get('/messages', isLoggedIn, function (req, res) {
-    db.collection('messages').find().toArray((err, result) => {
+    let userId = req.user._id
+    db.collection('messages').find({ to: userId }).toArray((err, result) => {
+      console.log(result)
+      console.log(userId)
       if (err) return console.log(err)
-      res.render('events.ejs', {
+      res.render('profile.ejs', {
         user: req.user,
-        events: result
+        messages: result
       })
     })
   });
@@ -91,15 +100,18 @@ module.exports = function (app, passport, db, multer, ObjectId) {
     })
   });
 
+
+
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
   });
 
   // post routes ===============================================================
-  app.post('/messages', (req, res) => {
-    let user = req.user._id
+  app.post('/messages/:recipientUserId', (req, res) => {
+    let senderUserId = req.user._id
     db.collection('messages').save({
+      to: req.params.recipientUserId,
       from: req.user.local.username,
       msg: req.body.msg
     }, (err, result) => {
@@ -143,28 +155,24 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       db.collection('savedResources').insertOne({ name: result.name, website: result.website, user: req.user.local.username, }, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-
+        res.redirect('/resources')
       })
-
     })
-    res.redirect('/profile')
   })
-
-
-  app.put('/editUsername', (req, res) => {
-    db.collection('users')
-      .findOneAndUpdate({ _id: ObjectId(req.body.id) }, {
-        $set: {
-          username: req.body.username
-        }
-      }, {
-        sort: { _id: -1 },
-        upsert: true
+  app.post('/savedEvents', (req, res) => {
+    db.collection('events').findOne({ _id: ObjectId(req.body.id) }, (err, result) => {
+      db.collection('savedEvents').insertOne({
+        eventName
+          : result.eventName, eventWebsite: result.eventWebsite, user: req.user.local.username,
       }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
+        if (err) return console.log(err)
+        console.log('saved to database')
+        res.redirect('/events')
       })
+    })
   })
+
+
 
 
   // app.put('/thumbDown', (req, res) => {
@@ -195,6 +203,12 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       res.send('Message deleted!')
     })
   })
+  app.delete('/deleteSavedEvents', (req, res) => {
+    db.collection('savedEvents').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================
   // =============================================================================
@@ -220,7 +234,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   });
 
   // process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
+  app.post('/signup', upload.single('fileToUpload'), passport.authenticate('local-signup', {
     successRedirect: '/profile', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages

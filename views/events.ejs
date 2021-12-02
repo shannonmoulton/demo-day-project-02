@@ -33,106 +33,115 @@
       </div>
     </div>
   </nav>
+  <% if (user.local.email) { %>
 
-  <h1>Events </h1>
+    <p id="currentUserId" value="<%= user._id %>" hidden>
+      <%= user._id %>
+    </p>
+    <% } else { %>
 
-  <table id="table_id" class="display">
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th>Event Name</th>
-        <th>Posted By</th>
-        <th>Description</th>
-        <th>Website</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Location</th>
-        <th>Save/Delete</th>
-      </tr>
-    </thead>
-    <% for(var i=0; i<events.length; i++) {%>
-      <tbody>
-        <tr>
-          <input type="hidden" value=<%=events[i]._id%> >
-          <td>
-            <%= events[i].category %>
-          </td>
-          <td>
-            <%= events[i].eventName %>
-          </td>
-          <td>
-            <%= events[i].user %>
-          </td>
-          <td>
-            <%= events[i].eventDescription %>
-          </td>
-          <td class="website">
-            <a href="<%= events[i].eventWebsite %>" target="_blank"> Website</a>
-          </td>
-          </td>
-          <td>
-            <%= events[i].date%>
-          </td>
-          <td>
-            <%= events[i].time %>
-          </td>
-          <td>
-            <%= events[i].location %>
-          </td>
-          <td>
-            <% if (user.local.username===events[i].user) { %>
-              <span><i class="fas fa-trash-alt" data-id="<%= events[i]._id%>"></i></span>
-              <% } else { %>
-                <span><i class="fas fa-save" data-id="<%= events[i]._id%>"></i></span>
-                <% } %>
-
-          </td>
-
-        </tr>
-
-      </tbody>
       <% } %>
 
-  </table>
+        <h1>Events </h1>
 
-  <!-- Modal -->
-  <!-- Trigger/Open The Modal -->
-  <button id="myBtn">Add New Event</button>
+        <table id="table_id" class="display">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Event Name</th>
+              <th>Posted By</th>
+              <th>Description</th>
+              <th>Website</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Location</th>
+              <th>Save/Delete</th>
+            </tr>
+          </thead>
+          <% for(var i=0; i<events.length; i++) {%>
+            <tbody>
+              <tr>
+                <input type="hidden" value=<%=events[i]._id%> >
+                <td>
+                  <%= events[i].category %>
+                </td>
+                <td>
+                  <%= events[i].eventName %>
+                </td>
+                <td>
+                  <%= events[i].user %>
+                </td>
+                <td>
+                  <%= events[i].eventDescription %>
+                </td>
+                <td class="website">
+                  <a href="<%= events[i].eventWebsite %>" target="_blank"> Website</a>
+                </td>
+                </td>
+                <td>
+                  <%= events[i].date%>
+                </td>
+                <td>
+                  <%= events[i].time %>
+                </td>
+                <td>
+                  <%= events[i].location %>
+                </td>
+                <td>
+                  <% if (user.local.username===events[i].user) { %>
+                    <span><i class="fas fa-trash-alt" data-id="<%= events[i]._id%>"></i></span>
+                    <% } else { %>
+                      <span><i class="fas fa-save" data-id="<%= events[i]._id%>"></i></span>
+                      <% } %>
 
-  <!-- The Modal -->
-  <div id="myModal" class="modal">
+                </td>
 
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div class="formSection">
-        <% if (user.local.email) { %>
-          <form action="/submitEvent" method="post">
-            <label for="category">Category: </label>
-            <input type="text" class="category formInput" placeholder="Category" name="category"><br>
-            <label for="eventName"> Event name:</label>
-            <input type="text" class="eventName formInput" placeholder="Event name" name="eventName"><br>
-            <label for="date">Date of event:</label>
-            <input type="date" class="date formInput" id="date" name="date"><br>
-            <label for="time"> Time:</label>
-            <input type="time" class="time formInput" name="time"><br>
-            <label for="location">Location: </label>
-            <input type="text" class="location formInput" placeholder=" 123 North Pole, Philadelphia, PA 19142"
-              name="location">
-            <label for="eventDescription">Description: </label>
-            <input type="text" class="description formInput" placeholder="Description" name="eventDescription"><br>
-            <label for="eventWebsite">Website: </label>
-            <input type="text" class="eventWebsite formInput" placeholder="Website" name="eventWebsite"><br>
-            <button class="submit" type="submit">Submit</button>
-          </form>
-          <% } %>
-      </div>
-    </div>
+              </tr>
 
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8"
-      src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-    <script src="events.js"></script>
+            </tbody>
+            <% } %>
+
+        </table>
+
+        <!-- Modal -->
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn">Add New Event</button>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="formSection">
+              <% if (user.local.email) { %>
+                <form action="/submitEvent" method="post">
+                  <label for="category">Category: </label>
+                  <input type="text" class="category formInput" placeholder="Category" name="category"><br>
+                  <label for="eventName"> Event name:</label>
+                  <input type="text" class="eventName formInput" placeholder="Event name" name="eventName"><br>
+                  <label for="date">Date of event:</label>
+                  <input type="date" class="date formInput" id="date" name="date"><br>
+                  <label for="time"> Time:</label>
+                  <input type="time" class="time formInput" name="time"><br>
+                  <label for="location">Location: </label>
+                  <input type="text" class="location formInput" placeholder=" 123 North Pole, Philadelphia, PA 19142"
+                    name="location">
+                  <label for="eventDescription">Description: </label>
+                  <input type="text" class="description formInput" placeholder="Description"
+                    name="eventDescription"><br>
+                  <label for="eventWebsite">Website: </label>
+                  <input type="text" class="eventWebsite formInput" placeholder="Website" name="eventWebsite"><br>
+                  <button class="submit" type="submit">Submit</button>
+                </form>
+                <% } %>
+            </div>
+          </div>
+
+          <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+          <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+          <script src="events.js"></script>
 
 </body>
 

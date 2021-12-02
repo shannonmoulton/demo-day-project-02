@@ -1,7 +1,7 @@
 //resource table
-$(document).ready( function () {
-    $('#table_id').DataTable();
-  } );
+$(document).ready(function () {
+  $('#table_id').DataTable();
+});
 //   $('#table_id').dataTable( {
 //     "order": [[ 0, 'asc' ], [ 1, 'asc' ]]
 // } );
@@ -10,15 +10,15 @@ var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
-btn.onclick = function() {
+btn.onclick = function () {
   modal.style.display = "block";
 }
 
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
@@ -30,8 +30,8 @@ const save = document.getElementsByClassName("fa-save");
 
 Array.from(trash).forEach(function (element) {
   element.addEventListener("click", function (e) {
-     const id = e.target.dataset.id
-     console.log(id)
+    const id = e.target.dataset.id
+    console.log(id)
     fetch("/delete", {
       method: 'delete',
       headers: {
@@ -39,7 +39,7 @@ Array.from(trash).forEach(function (element) {
       },
       body: JSON.stringify({
         'id': id
-        
+
       })
     }).then(function (response) {
       window.location.reload();
@@ -47,19 +47,23 @@ Array.from(trash).forEach(function (element) {
   });
 });
 
+// save event
+const currentUserId = document.getElementById("currentUserId").innerText
 
 Array.from(save).forEach(function (element) {
-  element.addEventListener("click", function (e) {
-    const id = e.target.dataset.id
+  element.addEventListener("click", function () {
+    const save = this.parentNode.childNodes[0]
+    const id = this.dataset.id
     console.log(id)
-    fetch("/savedItems", {
+    alert("Saved to profile");
+    fetch("savedEvents", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        'id': id
-        
+        'id': id,
+
       })
     }).then(function (response) {
       window.location.reload();

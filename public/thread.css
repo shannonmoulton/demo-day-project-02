@@ -1,3 +1,46 @@
+body{
+    padding-top:80px;
+    word-wrap:break-word;
+    background-image: url('img/tealBackground.png');
+    background-size: 100vw 100vh;
+    background-size: cover;
+    text-align: center;
+    word-wrap:break-word;
+    font-family: 'DM Sans';
+  }
+  
+  h1{
+      font-size: 2rem;
+  }
+  h2{
+    font-size: 1.5rem;
+  }
+  h3{
+    font-size: 1rem;
+  }
+  img{
+    max-width: 100%;
+    height: 400px;
+    object-fit: contain;
+    
+  }
+  .w-96{
+    width: 35rem;
+  }
+  .h-96{
+    height: 25rem;
+
+  }
+  .box{
+    width: 50%;
+    background-color: rgb(255, 255, 255, .75);
+    border-radius: 3%;
+    margin: 0 auto;
+  }
+.description{
+    background-color: white;
+    margin-top: 10px;
+}
 ul, li{
     display:inline;
  
