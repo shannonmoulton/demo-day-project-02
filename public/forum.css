@@ -1,12 +1,11 @@
-.heading{
-  background-color: rgb(241,241,241);
-  height: 100px;
+body{
   word-wrap:break-word;
   font-family: 'DM Sans';
 }
 h1{
   text-align: center;
-  padding-top: 25px;
+  margin-top: 32px;
+  margin-bottom: 40px;
 }
 
 #myInput {

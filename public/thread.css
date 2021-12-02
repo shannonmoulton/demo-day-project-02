@@ -1,5 +1,4 @@
 body{
-    padding-top:80px;
     word-wrap:break-word;
     background-image: url('img/tealBackground.png');
     background-size: 100vw 100vh;
@@ -48,8 +47,14 @@ ul, li{
 li{
     list-style: none;
     text-decoration: none;
+    text-align: left;
    
 }
 .comment-list{
     display:none;
+}
+button{
+  margin-left: 10px;
+  margin-bottom: 10px;
+
 }
