@@ -125,8 +125,8 @@
                   <label for="time"> Time:</label>
                   <input type="time" class="time formInput" name="time"><br>
                   <label for="location">Location: </label>
-                  <input type="text" class="location formInput" placeholder=" 123 North Pole, Philadelphia, PA 19142"
-                    name="location">
+                  <input type="text" id="autocomplete" class="location formInput"
+                    placeholder=" 123 North Pole, Philadelphia, PA 19142" name="location">
                   <label for="eventDescription">Description: </label>
                   <input type="text" class="description formInput" placeholder="Description"
                     name="eventDescription"><br>
@@ -137,6 +137,34 @@
                 <% } %>
             </div>
           </div>
+
+          <!-- <script>
+            let autocomplete;
+            function initAutocomplete() {
+              autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                  types: ['establishment'],
+                  componentRestrictions: { 'country': ['US'] },
+                  fields: ['place_id', 'geometry', 'name']
+                });
+              autocomplete.addListener('place_changed', onPlaceChanged);
+            }
+            function onPlacedChanged() {
+              const place = autocomplete.getPlace();
+              if (!place.geometry) {
+                //user did not select a prediction; reset the nput field
+                document.getElementById('autocomplete').placeholder = 'Enter a place';
+              } else {
+                //display details about the valid place
+                document.getElementById('details').innerHTML = place.name;
+              }
+            }
+          </script> -->
+
+          <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsV4es_wQi7dahHqQ-s4frelGRcFC2Cbw&libraries=places&callback=initMap">
+            </script>
 
           <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
           <script type="text/javascript" charset="utf8"

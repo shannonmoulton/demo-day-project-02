@@ -41,6 +41,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       })
     })
   });
+
   app.get('/messages', isLoggedIn, function (req, res) {
     let userId = req.user._id
     db.collection('messages').find({ to: userId }).toArray((err, result) => {
@@ -118,6 +119,24 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       res.redirect('/profile')
     })
   })
+
+  app.post('/updateAccount', upload.single('file-to-upload'), (req, res) => {
+    db.collection('users')
+      .findOneAndUpdate({ _id: req.user._id }, {
+        $set: {
+          "local.username": req.body.username,
+          "local.email": req.body.email,
+          "local.zipcode": req.body.zipcode,
+          "local.img": req.file.filename
+        }
+      }, {
+
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.redirect('/profile')
+      })
+  })
+
   app.post('/submitEvent', (req, res) => {
     let user = req.user._id
     db.collection('events').save({

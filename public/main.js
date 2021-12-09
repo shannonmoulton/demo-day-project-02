@@ -183,35 +183,7 @@ Array.from(trash).forEach(function (element) {
     });
   });
 });
-//Edit Account Details
 
-const edit = document.getElementsByClassName('fa-edit');
-
-Array.from(edit).forEach(function (element) {
-  element.addEventListener('click', function (e) {
-
-    // const username = this.parentNode.childNodes[5].innerText
-    // const email = this.parentNode.childNodes[10].innerText
-    // const location = this.parentNode.childNodes[15].innerText
-    // const id = e.target.dataset.id
-    // console.log(name)
-
-    // fetch('editUsername', {
-    //   method: 'put',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     'id': id
-    //   })
-    // })
-    //   .then(response => {
-    //     if (response.ok) return response.json()
-    //   })
-    //   .then(data => {
-    //     console.log(data)
-    //     window.location.reload(true)
-    //   })
-  });
-});
 ready(function () {
   var msg = document.getElementById('msg')
   if (msg) {
@@ -226,7 +198,25 @@ document.body.addEventListener('click', function (event) {
     const formElement = document.getElementById('formAction')
     formElement.setAttribute('action', `/messages/${id}`)
     document.getElementById("myForm").style.display = "block";
-
-
   }
 })
+
+
+// edit account details modal
+var modal = document.getElementById("editAccountModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function () {
+  modal.style.display = "block";
+}
+
+span.onclick = function () {
+  modal.style.display = "none";
+}
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

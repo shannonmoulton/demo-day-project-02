@@ -49,6 +49,66 @@ img{
   position: relative;
   top: 5px;
 }
+/* edit account details modal form */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.editAccountContent {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+label{
+  margin-top: 10px;
+}
+.formInput{
+  text-align: center;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.submit {
+  width: 30%;
+  background-color: #006769;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
   /* user chip on map info window */
 .chip {
     display: inline-block;
@@ -73,7 +133,6 @@ img{
     right: -14px;
   }
   
-  /* The popup chat - hidden by default */
   .chat-popup {
     display: none;
     position: fixed;
@@ -83,14 +142,12 @@ img{
     z-index: 9;
   }
   
-  /* Add styles to the form container */
   .form-container {
     max-width: 300px;
     padding: 10px;
     background-color: white;
   }
   
-  /* Full-width textarea */
   .form-container textarea {
     width: 100%;
     padding: 15px;
@@ -101,13 +158,11 @@ img{
     min-height: 200px;
   }
   
-  /* When the textarea gets focus, do something */
   .form-container textarea:focus {
     background-color: #ddd;
     outline: none;
   }
   
-  /* Set a style for the submit/send button */
   .form-container .btn {
     background-color: #04AA6D;
     color: white;
@@ -119,12 +174,10 @@ img{
     opacity: 0.8;
   }
   
-  /* Add a red background color to the cancel button */
   .form-container .cancel {
     background-color: red;
   }
   
-  /* Add some hover effects to buttons */
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
   }
@@ -137,4 +190,9 @@ img{
 .savedResources{
   list-style:circle;
   margin-top: 15px;
+}
+.formSection {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
 }

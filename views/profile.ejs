@@ -51,8 +51,30 @@
                   <img src="images/uploads/<%= user.local.img%>" class="profileImg"><br>
                   <strong>Username</strong>: <%= user.local.username %> <br>
                     <strong>Email</strong>: <%= user.local.email %> <br>
-                      <strong>Location</strong>: <%= user.local.zipcode %> <br>
+                      <strong>Location</strong>: <%= user.local.zipcode %> <i class="fas fa-edit" id="myBtn"></i><br>
                 </p>
+                <div id="editAccountModal" class="modal">
+                  <div class="editAccountContent">
+                    <span class="close">&times;</span>
+                    <div class="formSection">
+                      <h1>Edit Account Details</h1>
+                      <form action="/updateAccount" method="POST" enctype="multipart/form-data">
+                        <label for="username">Username:</label>
+                        <input type="text" class="formInput" name="username" value="<%= user.local.username %>"><br>
+                        <label for="email">Email:</label>
+                        <input type="text" class="formInput" name="email" value="<%= user.local.email %>"><br>
+                        <label for="zipcode">Zipcode:</label>
+                        <input type="text" class="formInput" name="zipcode" value="<%= user.local.zipcode %>"><br>
+                        <div class="form-group">
+                          <label class="form-label" for="profilepicture">Profile Picture</label><br>
+                          <input type="file" name="file-to-upload" class="btn btn-light mb-3 mx-2">
+                        </div><br>
+                        <button type="submit" class="submit">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
                 <% } %>
             </div>
           </div>
@@ -158,8 +180,10 @@
       showCurrentUser("<%= user.local.zipcode%>")
       <% }%>
 
-        <% for (var i = 0; i < users.length; i++) {%>
-      showAllUsers("<%= users[i].local.username%>", "<%= users[i].local.zipcode%>", "<%= users[i].local.img%>", "<%= users[i]._id%>")
+        <% for (var i = 0; i < users.length; i++) {
+      if (user.local.email != users[i].local.email) { %>
+        showAllUsers("<%= users[i].local.username%>", "<%= users[i].local.zipcode%>", "<%= users[i].local.img%>", "<%= users[i]._id%>")
+        <% }%>
       <% } %>
 
       <% for (var i = 0; i < events.length; i++) {%>
