@@ -10,6 +10,8 @@ $(document).ready(function () {
     stateSave: true
   });
 });
+
+
 // save resource
 const save = document.getElementsByClassName("fa-save");
 const currentUserId = document.getElementById("currentUserId").innerText

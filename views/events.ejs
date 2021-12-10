@@ -58,10 +58,10 @@
               <th>Save/Delete</th>
             </tr>
           </thead>
-          <% for(var i=0; i<events.length; i++) {%>
-            <tbody>
+          <tbody>
+            <% for(var i=0; i<events.length; i++) {%>
+
               <tr>
-                <input type="hidden" value=<%=events[i]._id%> >
                 <td>
                   <%= events[i].category %>
                 </td>
@@ -76,7 +76,6 @@
                 </td>
                 <td class="website">
                   <a href="<%= events[i].eventWebsite %>" target="_blank"> Website</a>
-                </td>
                 </td>
                 <td>
                   <%= events[i].date%>
@@ -93,13 +92,10 @@
                     <% } else { %>
                       <span><i class="fas fa-save" data-id="<%= events[i]._id%>"></i></span>
                       <% } %>
-
                 </td>
-
               </tr>
-
-            </tbody>
-            <% } %>
+              <% } %>
+          </tbody>
 
         </table>
 

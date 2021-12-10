@@ -121,14 +121,25 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   })
 
   app.post('/updateAccount', upload.single('file-to-upload'), (req, res) => {
+    let updates
+    if (req.file) {
+      updates = {
+        "local.username": req.body.username,
+        "local.email": req.body.email,
+        "local.zipcode": req.body.zipcode,
+        "local.img": req.file.filename
+      }
+    } else {
+      updates = {
+        "local.username": req.body.username,
+        "local.email": req.body.email,
+        "local.zipcode": req.body.zipcode
+      }
+    }
     db.collection('users')
       .findOneAndUpdate({ _id: req.user._id }, {
-        $set: {
-          "local.username": req.body.username,
-          "local.email": req.body.email,
-          "local.zipcode": req.body.zipcode,
-          "local.img": req.file.filename
-        }
+        $set: updates
+
       }, {
 
       }, (err, result) => {

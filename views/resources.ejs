@@ -56,10 +56,11 @@
                 <th>Save</th>
               </tr>
             </thead>
+            <tbody>
 
-            <% for(var i=0; i<resources.length; i++) {%>
+              <% for(var i=0; i<resources.length; i++) {%>
 
-              <tbody>
+
                 <tr>
                   <td>
                     <%= resources[i].name %>
@@ -79,8 +80,9 @@
                   <td class="website"> <a href="<%= resources[i].website %>" target="_blank"> Website</a></td>
                   <td><span><i class="fas fa-save" data-id="<%= resources[i]._id%>"></i></span></td>
                 </tr>
+
                 <% } %>
-              </tbody>
+            </tbody>
 
           </table>
 
